@@ -1,7 +1,14 @@
 import EditorPage from "./pages/EditorPage"
+import {ToastContainer} from "react-toastify"
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
-  return <EditorPage />;
+  return(
+    <>
+    <EditorPage/>,
+    <ToastContainer position="bottom-right"autoClose={4000} hideProgressBar={false} pauseOnHover/>
+    </>
+  )
 }
 
 export default App;

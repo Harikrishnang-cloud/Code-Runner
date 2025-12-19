@@ -1,51 +1,65 @@
-import { useEffect, useState } from "react";
+import { useRef, useState } from "react";
 
-function TaskTimer({onTimeUp}) {
+function TaskTimer({ onTimeUp }) {
   const [minutes, setMinutes] = useState(10);
-  const [timeLeft, setTimeLeft] = useState(minutes * 60);
+  const [timeLeft, setTimeLeft] = useState(10 * 60);
   const [isRunning, setIsRunning] = useState(false);
 
+  const intervalRef = useRef(null);
 
-  useEffect(() => {
-    setTimeLeft(minutes * 60);
-    setIsRunning(false);
-    onTimeUp(false)
-  }, [minutes]);
+  const formatTime = (seconds) => {
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    return `${m}:${String(s).padStart(2, "0")}`;
+  };
 
-  useEffect(() => {
-    if (!isRunning) return;
 
-    const interval = setInterval(() => {
+  function startTimer() {
+    if (intervalRef.current) return;
+
+    setIsRunning(true);
+
+    intervalRef.current = setInterval(() => {
       setTimeLeft((prev) => {
         if (prev <= 1) {
-          clearInterval(interval);
+          clearInterval(intervalRef.current);
+          intervalRef.current = null;
           setIsRunning(false);
-        onTimeUp(true)
+          onTimeUp(true);
           return 0;
         }
         return prev - 1;
       });
     }, 1000);
+  }
 
-    return () => clearInterval(interval);
-  }, [isRunning]);
 
-  const formatTime = (seconds) => {
-    const m = String(Math.floor(seconds / 60)).padStart(2, "0");
-    const s = String(seconds % 60).padStart(2, "0");
-    return `${m}:${s}`;
-  };
+  function pauseTimer() {
+    clearInterval(intervalRef.current);
+    intervalRef.current = null;
+    setIsRunning(false);
+  }
+
+  function changeMinutes(value) {
+    clearInterval(intervalRef.current);
+    intervalRef.current = null;
+
+    setMinutes(value);
+    setTimeLeft(value * 60);
+    setIsRunning(false);
+    onTimeUp(false);
+  }
 
   return (
-    <div style={{display:"flex",alignItems:"center", gap:"8px", fontSize:"16px"}}>
+    <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
       <div style={{ fontWeight: "bold" }}>
         ⏱️ {formatTime(timeLeft)}
       </div>
 
-      <select value={minutes}
-        onChange={(e) => setMinutes(Number(e.target.value))}
+      <select
+        value={minutes}
+        onChange={(e) => changeMinutes(Number(e.target.value))}
         style={{
-          marginTop: "4px",
           background: "#1e1e1e",
           color: "white",
           border: "1px solid #555",
@@ -61,16 +75,15 @@ function TaskTimer({onTimeUp}) {
         <option value={60}>1 hour</option>
       </select>
 
-      <div style={{ marginTop: "5px" }}>
-        <button onClick={() => setIsRunning(!isRunning)}
-          style={{
-            fontSize: "12px",
-            padding: "2px 6px",
-            cursor: "pointer"
-          }}>{isRunning ? "Pause" : "Start"}
-        </button>
-      </div>
-      
+      <button
+        onClick={isRunning ? pauseTimer : startTimer}
+        style={{
+          fontSize: "12px",
+          padding: "2px 6px",
+          cursor: "pointer"
+        }}>
+        {isRunning ? "Pause" : "Start"}
+      </button>
     </div>
   );
 }

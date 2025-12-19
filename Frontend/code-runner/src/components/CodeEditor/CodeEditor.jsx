@@ -2,7 +2,7 @@ import Editor from "@monaco-editor/react";
 
 
 
-function CodeEditor({ code, setCode,language="javascript" }) {
+function CodeEditor({ code, setCode,language="javascript",autoSuggest={autoSuggest} }) {
   return (
     <Editor
       key={language}
@@ -12,7 +12,12 @@ function CodeEditor({ code, setCode,language="javascript" }) {
       value={code}
       onChange={(value) => setCode(value || "")}
       options={{
-        automaticLayout:true
+        automaticLayout:true,
+        suggestOnTriggerCharacters:autoSuggest,
+        quickSuggestions:autoSuggest ? {other:true,comments:false,strings:true} : false,
+        parameterHints:{
+          enabled:autoSuggest
+        }
       }}
     />
   );
