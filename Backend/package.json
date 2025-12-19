@@ -1,0 +1,22 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "\"This is backend for the app code-runner. Espeacially focus on small MERN stack application. initially its very small project.\"",
+  "license": "ISC",
+  "author": "HARIKRISHNAN G",
+  "type": "commonjs",
+  "main": "Server.js",
+  "scripts": {
+    "test": "npm server.js",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.2.1",
+    "nodemon": "^3.1.11",
+    "php": "^1.1.0",
+    "python": "^0.0.4",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  }
+}
