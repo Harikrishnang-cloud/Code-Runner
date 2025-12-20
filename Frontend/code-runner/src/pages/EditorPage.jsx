@@ -1,7 +1,7 @@
 import {useState } from "react";
 import CodeEditor from "../components/CodeEditor/CodeEditor";
 import RunButton from "../components/RunButton/RunButton";
-import OutputPanel from "../components/OutputPanel/OutputPanel";
+import OutputPanel from "../components/OutputPanel/outputPanel";
 import LanguageSelector from "../components/LanguageSelector/languageList";
 import TaskTimer from "../components/TaskTimer/TaskTimer";
 import { useCodeRunner } from "../hooks/useCodeRunner";
