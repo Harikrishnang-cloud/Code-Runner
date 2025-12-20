@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 
-function TaskTimer({ onTimeUp }) {
+function TaskTimer({ onTimeUp ,theme}) {
   const [minutes, setMinutes] = useState(10);
   const [timeLeft, setTimeLeft] = useState(10 * 60);
   const [isRunning, setIsRunning] = useState(false);
@@ -59,12 +59,12 @@ function TaskTimer({ onTimeUp }) {
       <select
         value={minutes}
         onChange={(e) => changeMinutes(Number(e.target.value))}
-        style={{
-          background: "#1e1e1e",
-          color: "white",
-          border: "1px solid #555",
-          padding: "2px 4px"
-        }}>
+        style={{background: theme === "dark" ? "#1e1e1e" : "#ffffff",
+      color: theme === "dark" ? "#ffffff" : "#000000",
+      border: theme === "dark" ? "1px solid #555" : "1px solid #ccc",
+      padding: "4px 8px",
+      borderRadius: "4px",
+      cursor: "pointer"}}>
         <option value={0.25}>15 sec</option>
         <option value={0.5}>30 sec</option>
         <option value={1}>1 min</option>

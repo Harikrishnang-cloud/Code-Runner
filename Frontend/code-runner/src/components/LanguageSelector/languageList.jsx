@@ -1,16 +1,15 @@
-function LanguageSelector({ language, onChange }) {
+function LanguageSelector({ language, onChange ,theme}) {
   return (
     <select
       value={language}
       onChange={(e) => onChange(e.target.value)}
-      style={{
-        background: "#1e1e1e",
-        color: "white",
-        border: "1px solid #555",
-        padding: "4px 8px",
-        borderRadius: "4px",
-        cursor: "pointer"
-      }}>
+      style={{background: theme === "dark" ? "#1e1e1e" : "#ffffff",
+      color: theme === "dark" ? "#ffffff" : "#000000",
+      border: theme === "dark" ? "1px solid #555" : "1px solid #ccc",
+      padding: "4px 8px",
+      borderRadius: "4px",
+      cursor: "pointer"}}>
+        
       <option value="javascript">JavaScript</option>
       <option value="typescript">TypeScript</option>
       <option value="python">Python</option>

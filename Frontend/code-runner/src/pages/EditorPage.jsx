@@ -1,4 +1,4 @@
-import {useState } from "react";
+import {useEffect, useState } from "react";
 import CodeEditor from "../components/CodeEditor/CodeEditor";
 import RunButton from "../components/RunButton/RunButton";
 import OutputPanel from "../components/OutputPanel/outputPanel";
@@ -13,20 +13,28 @@ function EditorPage() {
   const [timeUp, setTimeUp] = useState(false);          
   const [taskCompleted, setTaskCompleted] = useState(false);
   const [autoSuggest,setautoSuggest] = useState(true)
+  const [theme,setTheme] = useState("dark")
   const Default_Languages = { 
     javascript : `console.log("Hello World")`,
     typescript : `console.log("Hello World-ts")`,
     python : `print("Hello World")`,
     php : `<?php echo "Hello World"`
   }
+  useEffect(()=>{
+    const savedTheme = localStorage.getItem("theme")
+    if(savedTheme){
+      setTheme(savedTheme)
+    }
+  },[])
 
-  
-  // useEffect(() => {
-  //   setTaskCompleted(false);
-  // }, [code, timeUp]);
+  useEffect(()=>{
+    localStorage.setItem("theme",theme)
+  },[theme])
 
   return (
-    <div style={{ padding: 20 }}>
+    <div style={{ padding: 20, minHeight:"100vh",background:theme==="dark"?"#121212":"#f5f5f5", color:theme==="dark" ? "#ffffff":"#000000",overflow:"hidden"}}>
+     
+      {/*  navbar  */}
       <div
         style={{
           display: "flex",
@@ -34,37 +42,48 @@ function EditorPage() {
           alignItems: "center",
           marginBottom: 10
         }}>
+        {/* logo */}
         <div>
           <h2 style={{ margin: 0 }}>🧑‍💻 Code Runner</h2>
         </div>
+
         <p style={{ margin: 0, fontSize: "15px" }}>
           ❤️From a single idea to a running world of code❤️
         </p>
+        <div style={{display: "flex",gap:"8px"}}>
+
         <button onClick={() => setautoSuggest(prev => !prev)}
           style={{padding: "4px 8px",borderRadius: "6px",cursor: "pointer",border: "1px solid #555",background: autoSuggest ? "#2e7d32" : "#444",color: "#fff"}}>
           {autoSuggest ? "Suggestions ON" : "Suggestions OFF"}
         </button>
 
+        <button onClick={() => setTheme(prev => (prev === "dark" ? "light" : "dark"))}>
+          {theme === "dark" ? "Light" : "Dark"}
+        </button>
+
         <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
-          <TaskTimer onTimeUp={setTimeUp} />  
+          <TaskTimer onTimeUp={setTimeUp} theme={theme} />  
           <LanguageSelector language={language} onChange={(lang)=>{
             setLanguage(lang)
             setCode(Default_Languages[lang] || "")
-          }}/>
+          }} theme={theme}/>
         </div>
       </div>
+      </div>
+
+
       <CodeEditor code={code} 
       setCode={(value)=>{
         setCode(value);
         setTaskCompleted(false)
-      }} language={language} autoSuggest={autoSuggest}/>
+      }} language={language} autoSuggest={autoSuggest} theme={theme}/>
  
       <div
         style={{
           display: "flex",
           alignItems: "center",
           gap: "12px",
-          marginTop: "10px"
+          marginTop: "10px",
         }}>
         <RunButton onRun={async () => {
           const success = await runCode(language);
@@ -85,11 +104,15 @@ function EditorPage() {
           </span>
         )}
       </div>
-      <OutputPanel output={output} />
+      <OutputPanel output={output} theme={theme} />
 
-      <div style={{position: "fixed",bottom: "12px",right: "16px",fontSize: "12px",opacity: 0.50,userSelect: "none",color: "#ffffff"}}>
-        <a href="https://www.linkedin.com/in/harikrishnan-g-1315721b7/" style={{color:"inherit", textDecoration:"none"}}> ~ Developed By HARIKRISHNAN_G</a>
-      </div>
+    <div style={{
+       position: "fixed",bottom: "12px",right: "16px",fontSize: "12px",
+       opacity: 0.5,color: theme === "dark" ? "#ffffff" : "#2886c9ff"}}>
+      <a href="https://www.linkedin.com/in/harikrishnan-g-1315721b7/" style={{ color: "inherit", textDecoration: "none" }}>
+        ~ Developed By HARIKRISHNAN_G
+      </a>
+    </div>
     </div>
   );
 }

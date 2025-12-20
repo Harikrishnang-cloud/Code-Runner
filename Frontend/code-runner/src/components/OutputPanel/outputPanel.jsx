@@ -1,18 +1,20 @@
-function OutputPanel({ output }) {
+function OutputPanel({ output, theme }) {
   return (
     <pre
       style={{
-        background: "#111",
-        color: "#0f0",
+        background: theme === "dark" ? "#000000" : "#f5f5f5",
+        color: theme === "dark" ? "#00ff00" : "#006400",
         padding: 20,
         marginTop: 15,
         minHeight: "140px",
-        minWidth:"1450px"
-      }}>
+        borderRadius: "6px",
+        overflow: "auto"
+      }}
+    >
       {output || "No output"}
     </pre>
   );
 }
 
 export default OutputPanel;
-
+    
