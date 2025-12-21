@@ -45,19 +45,23 @@ function EditorPage() {
         {/* logo */}
         <div>
           <h2 style={{ margin: 0 }}>🧑‍💻 Code Runner</h2>
+          <p style={{ margin: 0, fontSize: "12px" }}>
+          ❤️From a single idea to a running world of code❤️
+          </p>
         </div>
 
-        <p style={{ margin: 0, fontSize: "15px" }}>
-          ❤️From a single idea to a running world of code❤️
-        </p>
+        
         <div style={{display: "flex",gap:"8px"}}>
 
         <button onClick={() => setautoSuggest(prev => !prev)}
-          style={{padding: "4px 8px",borderRadius: "6px",cursor: "pointer",border: "1px solid #555",background: autoSuggest ? "#2e7d32" : "#444",color: "#fff"}}>
+          style={{padding: "4px 8px",borderRadius: "6px",cursor: "pointer",border: "1px solid #555",background: autoSuggest ? "#2e7d32" : "#444",color: "#fff",transition: "all 0.95s ease"}}>
           {autoSuggest ? "Suggestions ON" : "Suggestions OFF"}
         </button>
 
-        <button onClick={() => setTheme(prev => (prev === "dark" ? "light" : "dark"))}>
+        <button onClick={() => setTheme(prev => (prev === "dark" ? "light" : "dark"))} 
+          style={{padding: "6px 12px",borderRadius: "6px",cursor: "pointer",border: theme === "dark" ? "1px solid #555" : "1px solid #ccc",
+          background: theme === "dark" ? "#1e1e1e" : "#ffffff",color: theme === "dark" ? "#ffffff" : "#000000",transition: "all 0.25s ease",
+          }}>
           {theme === "dark" ? "Light" : "Dark"}
         </button>
 
