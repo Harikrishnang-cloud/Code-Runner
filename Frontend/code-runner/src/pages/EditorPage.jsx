@@ -38,6 +38,8 @@ function EditorPage() {
       <div
         style={{
           display: "flex",
+          flexWrap:"wrap",
+          gap:"10px",
           justifyContent: "space-between",
           alignItems: "center",
           marginBottom: 10
@@ -51,7 +53,7 @@ function EditorPage() {
         </div>
 
         
-        <div style={{display: "flex",gap:"8px"}}>
+        <div style={{display: "flex",flexWrap:"wrap",gap:"8px",alignItems:"center"}}>
 
         <button onClick={() => setautoSuggest(prev => !prev)}
           style={{padding: "4px 8px",borderRadius: "6px",cursor: "pointer",border: "1px solid #555",background: autoSuggest ? "#2e7d32" : "#444",color: "#fff",transition: "all 0.95s ease"}}>
@@ -85,6 +87,8 @@ function EditorPage() {
       <div
         style={{
           display: "flex",
+          justifyContent:"flex-end",
+          flexWrap:"wrap",
           alignItems: "center",
           gap: "12px",
           marginTop: "10px",

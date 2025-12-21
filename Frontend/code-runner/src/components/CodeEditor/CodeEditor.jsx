@@ -6,7 +6,7 @@ function CodeEditor({ code, setCode,language="javascript",autoSuggest={autoSugge
   return (
     <Editor
       key={language}
-      height="400px"
+      height="60vh"
       language={language}
       theme={ theme ==="dark" ?  "vs-dark" : "light" }
       value={code}

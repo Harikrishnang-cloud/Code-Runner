@@ -5,3 +5,22 @@ body {
   color: white;
   overflow: hidden;
 }
+
+/* Responsive Layout Settings */
+
+@media(max-width:768px){
+  h2{
+    font-size: 18px;
+  }
+  button,select,input{
+    font-size: 14px;
+  }
+}
+@media(max-width:480px){
+  h2{
+    font-size: 16px;
+  }
+  .editor-continer{
+    height: 50vh;
+  }
+}

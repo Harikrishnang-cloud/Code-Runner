@@ -33,7 +33,7 @@ app.post("/run", (req, res) => {
   const filePath = path.join(__dirname, fileName);
   fs.writeFileSync(filePath, code);
 
-  exec(command, { timeout: 2000, shell: true }, (error, stdout, stderr) => {
+  exec(command, { timeout: 4000, shell: true }, (error, stdout, stderr) => {
     if (fs.existsSync(filePath)) {
       fs.unlinkSync(filePath);
     }
