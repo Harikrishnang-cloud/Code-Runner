@@ -13,9 +13,11 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^5.2.1",
+    "mongoose": "^9.0.2",
     "nodemon": "^3.1.11",
     "php": "^1.1.0",
     "python": "^0.0.4",
+    "ruby": "^0.6.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
   }

@@ -6,7 +6,7 @@ function App() {
   return(
     <>
     <EditorPage/>,
-    <ToastContainer position="bottom-right"autoClose={4000} hideProgressBar={false} pauseOnHover/>
+    <ToastContainer position="bottom-right"autoClose={8000} hideProgressBar={false} pauseOnHover/>
     </>
   )
 }

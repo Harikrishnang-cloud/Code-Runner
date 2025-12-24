@@ -1,11 +1,11 @@
 import {useEffect, useState } from "react";
 import CodeEditor from "../components/CodeEditor/CodeEditor";
 import RunButton from "../components/RunButton/RunButton";
-import OutputPanel from "../components/OutputPanel/outputPanel";
+import OutputPanel from "../components/OutputPanel/OutputPanel";
 import LanguageSelector from "../components/LanguageSelector/languageList";
 import TaskTimer from "../components/TaskTimer/TaskTimer";
 import { useCodeRunner } from "../hooks/useCodeRunner";
-// import { toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 function EditorPage() {
   const { code, setCode, output, runCode} = useCodeRunner();
@@ -18,7 +18,8 @@ function EditorPage() {
     javascript : `console.log("Hello World")`,
     typescript : `console.log("Hello World-ts")`,
     python : `print("Hello World")`,
-    php : `<?php echo "Hello World"`
+    php : `<?php echo "Hello World"`,
+    ruby: `puts "Hello World"`,
   }
   useEffect(()=>{
     const savedTheme = localStorage.getItem("theme")
@@ -31,18 +32,25 @@ function EditorPage() {
     localStorage.setItem("theme",theme)
   },[theme])
 
+  useEffect(()=>{
+    function infoToast(){
+      toast.info("This platform is under active development. Some features may add or change without notice. ~ By Development Team",{
+        toastId:"dev-info",
+      })
+    }
+    infoToast()
+    const interval = setInterval(infoToast,15*60*1000)
+    return()=>clearInterval(interval)
+  },[])
+
   return (
     <div style={{ padding: 20, minHeight:"100vh",background:theme==="dark"?"#121212":"#f5f5f5", color:theme==="dark" ? "#ffffff":"#000000",overflow:"hidden"}}>
      
       {/*  navbar  */}
       <div
         style={{
-          display: "flex",
-          flexWrap:"wrap",
-          gap:"10px",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: 10
+          display: "flex",flexWrap:"wrap",gap:"10px",
+          justifyContent: "space-between",alignItems: "center",marginBottom: 10
         }}>
         {/* logo */}
         <div>
@@ -73,6 +81,7 @@ function EditorPage() {
             setLanguage(lang)
             setCode(Default_Languages[lang] || "")
           }} theme={theme}/>
+          
         </div>
       </div>
       </div>

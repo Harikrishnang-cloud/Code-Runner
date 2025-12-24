@@ -8,8 +8,7 @@ function OutputPanel({ output, theme }) {
       <div style={{
           padding: "8px 12px",fontWeight: "bold",
           borderBottom:theme === "dark" ? "1px solid #333" : "1px solid #ccc"
-        }}>
-        Output
+        }}>Output
       </div>
 
       <pre style={{

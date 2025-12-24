@@ -3,6 +3,12 @@ const cors = require("cors");
 const path = require("path");
 const fs = require("fs");
 const { exec } = require("child_process");
+const { connect } = require("http2");
+require("dotenv").config()
+const connectDB = require("./config/db")
+
+
+connectDB()
 
 const app = express();
 app.use(cors());
@@ -17,13 +23,18 @@ app.post("/run", (req, res) => {
   if (language === "typescript") {
     fileName = `temp-${Date.now()}.ts`;
     command = `npx ts-node --project tsconfig.json --transpile-only ${fileName}`;
-  } else if(language === "python"){
+  }
+  else if(language === "python"){
     fileName = `temp-${Date.now()}.py`;
     command = `python ${fileName}`;
   }
   else if(language === "php"){
     fileName = `temp-${Date.now()}.php`;
     command = `"C:\\xampp\\php\\php.exe" ${fileName}`;
+  }
+  else if(language === "ruby"){
+    fileName = `temp-${Date.now()}.rb`;
+    command = `ruby ${fileName}`
   }
   else {
     fileName = `temp-${Date.now()}.js`;
@@ -51,8 +62,18 @@ app.post("/run", (req, res) => {
     res.json({ output: stdout || "No output" });
   });
 });
+app.post("/mongoRun",async (req,res)=>{
+  const {collection,query} = req.body;
+  try{
+    const result = runMongoQuery({collection,query})
+    res.json({output:result})
+  }
+  catch(error){
+    res.json({error:error.message})
+  }
+})
 
-const PORT = 1729;
+const PORT = process.env.PORT || 1729;
 app.listen(PORT, () => {
   console.log(`server is running on the port - ${PORT}`);
 });

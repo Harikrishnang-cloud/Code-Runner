@@ -41,6 +41,15 @@ function TaskTimer({ onTimeUp ,theme}) {
     setIsRunning(false);
   }
 
+
+  // function restartTimer(){
+  //   clearInterval(intervalRef.current)
+  //   intervalRef.current = null;
+  //   setTimeLeft(minutes*60)
+  //   setIsRunning(false)
+  //   onTimeUp(false)
+  // }
+
   function changeMinutes(value) {
     clearInterval(intervalRef.current);
     intervalRef.current = null;
@@ -79,6 +88,9 @@ function TaskTimer({ onTimeUp ,theme}) {
         }}>
         {isRunning ? "Pause" : "Start"}
       </button>
+      {/* <button onClick={restartTimer}>
+        Restart
+      </button> */}
     </div>
   );
 }
