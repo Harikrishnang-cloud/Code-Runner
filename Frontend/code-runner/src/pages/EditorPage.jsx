@@ -39,7 +39,7 @@ function EditorPage() {
       })
     }
     infoToast()
-    const interval = setInterval(infoToast,15*60*1000)
+    const interval = setInterval(infoToast,1*60*1000)
     return()=>clearInterval(interval)
   },[])
 
