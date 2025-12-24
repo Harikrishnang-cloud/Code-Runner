@@ -1,6 +1,6 @@
 import { useState } from "react";
 import MongoEditor from "../components/MongoEditor/mongoEditor";
-import OutputPanel from "../components/OutputPanel/OutputPanel";
+import OutputPanel from "../components/OutputPanel/outputPanel";
 import { runMongoQuery } from "../services/mongoRunnerApi";
 
 function DatabasePage({ theme }) {

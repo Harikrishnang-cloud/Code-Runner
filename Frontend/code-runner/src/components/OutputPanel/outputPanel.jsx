@@ -14,7 +14,7 @@ function OutputPanel({ output, theme }) {
       <pre style={{
           margin: 0,padding: "12px",
           color: theme === "dark" ? "#00ff00" : "#000",
-          maxHeight: "200px",overflowY: "auto",          
+          maxHeight: "150px",minHeight:"150px",overflowY: "auto",          
           overflowX: "auto",whiteSpace: "pre-wrap",
           wordBreak: "break-word",fontSize: "14px"
         }}>

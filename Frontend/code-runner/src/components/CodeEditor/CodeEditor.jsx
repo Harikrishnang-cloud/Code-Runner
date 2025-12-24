@@ -6,7 +6,7 @@ function CodeEditor({ code, setCode,language="javascript",autoSuggest={autoSugge
   return (
     <Editor
       key={language}
-      height="60vh"
+      height="50vh"
       language={language}
       theme={ theme ==="dark" ?  "vs-dark" : "light" }
       value={code}
@@ -18,8 +18,7 @@ function CodeEditor({ code, setCode,language="javascript",autoSuggest={autoSugge
         parameterHints:{
           enabled:autoSuggest
         }
-      }}
-    />
+      }}/>
   );
 }
 

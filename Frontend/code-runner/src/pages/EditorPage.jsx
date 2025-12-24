@@ -1,7 +1,7 @@
 import {useEffect, useState } from "react";
 import CodeEditor from "../components/CodeEditor/CodeEditor";
 import RunButton from "../components/RunButton/RunButton";
-import OutputPanel from "../components/OutputPanel/OutputPanel";
+import OutputPanel from "../components/OutputPanel/outputPanel";
 import LanguageSelector from "../components/LanguageSelector/languageList";
 import TaskTimer from "../components/TaskTimer/TaskTimer";
 import { useCodeRunner } from "../hooks/useCodeRunner";
@@ -61,7 +61,7 @@ function EditorPage() {
         </div>
 
         
-        <div style={{display: "flex",flexWrap:"wrap",gap:"8px",alignItems:"center"}}>
+        <div style={{display:"flex",flexWrap:"wrap",gap:"8px",alignItems:"center"}}>
 
         <button onClick={() => setautoSuggest(prev => !prev)}
           style={{padding: "4px 8px",borderRadius: "6px",cursor: "pointer",border: "1px solid #555",background: autoSuggest ? "#2e7d32" : "#444",color: "#fff",transition: "all 0.95s ease"}}>
@@ -96,11 +96,12 @@ function EditorPage() {
       <div
         style={{
           display: "flex",
-          justifyContent:"flex-end",
+          justifyContent:"space-between",
           flexWrap:"wrap",
           alignItems: "center",
           gap: "12px",
           marginTop: "10px",
+          // width:"100%"
         }}>
         <RunButton onRun={async () => {
           const success = await runCode(language);
@@ -124,7 +125,7 @@ function EditorPage() {
       <OutputPanel output={output} theme={theme} />
 
     <div style={{
-       position: "fixed",bottom: "12px",right: "16px",fontSize: "12px",
+       position: "fixed",bottom: "12px",right: "40px",fontSize: "12px",
        opacity: 0.5,color: theme === "dark" ? "#ffffff" : "#2886c9ff"}}>
       <a href="https://www.linkedin.com/in/harikrishnan-g-1315721b7/" style={{ color: "inherit", textDecoration: "none" }}>
         ~ Developed By HARIKRISHNAN_G
