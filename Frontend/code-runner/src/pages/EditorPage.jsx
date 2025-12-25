@@ -6,6 +6,9 @@ import LanguageSelector from "../components/LanguageSelector/languageList";
 import TaskTimer from "../components/TaskTimer/TaskTimer";
 import { useCodeRunner } from "../hooks/useCodeRunner";
 import { toast } from "react-toastify";
+import { Tooltip } from 'react-tooltip';
+import 'react-tooltip/dist/react-tooltip.css';
+
 
 function EditorPage() {
   const { code, setCode, output, runCode} = useCodeRunner();
@@ -43,6 +46,21 @@ function EditorPage() {
     return()=>clearInterval(interval)
   },[])
 
+  useEffect(()=>{
+    const ShortCutKey = async(e)=>{
+      if((e.ctrlKey || e.metaKey) && e.key === "Enter"){
+        if(!timeUp){
+          let success = await runCode(language)
+          setTaskCompleted(success)
+        }
+      }
+    }
+    document.addEventListener("keydown",ShortCutKey)
+    return ()=>{
+      document.removeEventListener("keydown",ShortCutKey)
+    }
+  },[timeUp,language,runCode])
+
   return (
     <div style={{ padding: 20, minHeight:"100vh",background:theme==="dark"?"#121212":"#f5f5f5", color:theme==="dark" ? "#ffffff":"#000000",overflow:"hidden"}}>
      
@@ -56,7 +74,7 @@ function EditorPage() {
         <div>
           <h2 style={{ margin: 0 }}>🧑‍💻 Code Runner</h2>
           <p style={{ margin: 0, fontSize: "12px" }}>
-          ❤️From a single idea to a running world of code❤️
+          ❤️From a single idea to a running world of code📈
           </p>
         </div>
 
@@ -68,7 +86,7 @@ function EditorPage() {
           {autoSuggest ? "Suggestions ON" : "Suggestions OFF"}
         </button>
 
-        <button onClick={() => setTheme(prev => (prev === "dark" ? "light" : "dark"))} 
+        <button data-tooltip-id="runTip" data-tooltip-content="Dark/Light"data-tooltip-place="bottom" onClick={() => setTheme(prev => (prev === "dark" ? "light" : "dark"))} 
           style={{padding: "6px 12px",borderRadius: "6px",cursor: "pointer",border: theme === "dark" ? "1px solid #555" : "1px solid #ccc",
           background: theme === "dark" ? "#1e1e1e" : "#ffffff",color: theme === "dark" ? "#ffffff" : "#000000",transition: "all 0.25s ease",
           }}>
@@ -76,8 +94,8 @@ function EditorPage() {
         </button>
 
         <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
-          <TaskTimer onTimeUp={setTimeUp} theme={theme} />  
-          <LanguageSelector language={language} onChange={(lang)=>{
+          <TaskTimer data-tooltip-id="runTip" data-tooltip-content="Timer"data-tooltip-place="bottom" onTimeUp={setTimeUp} theme={theme} />  
+          <LanguageSelector data-tooltip-id="runTip" data-tooltip-content="Languages"data-tooltip-place="left" language={language} onChange={(lang)=>{
             setLanguage(lang)
             setCode(Default_Languages[lang] || "")
           }} theme={theme}/>
@@ -93,8 +111,7 @@ function EditorPage() {
         setTaskCompleted(false)
       }} language={language} autoSuggest={autoSuggest} theme={theme}/>
  
-      <div style={{display: "flex",justifyContent: "space-between",alignItems: "center",
-                   marginTop: "10px",width: "100%",}}>
+      <div style={{display: "flex",justifyContent: "space-between",alignItems: "center",marginTop: "10px",width: "100%",}}>
   
         <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
           {!timeUp && taskCompleted && (
@@ -110,13 +127,14 @@ function EditorPage() {
           )}
         </div>
 
-        <RunButton onRun={async () => {
+        <RunButton data-tooltip-id="runTip"data-tooltip-content="Shortcut : Ctrl+Enter"data-tooltip-place="top"
+        onRun={async () => {
           const success = await runCode(language);
           if (!timeUp) setTaskCompleted(success);
-        }}disabled={timeUp}/>
+        }}disabled={timeUp}/> 
       </div>
-
-      <OutputPanel output={output} theme={theme} />
+      <Tooltip id="runTip"/>
+      <OutputPanel output={output} theme={theme}/>
 
     <div style={{
        position: "fixed",bottom: "12px",right: "40px",fontSize: "12px",

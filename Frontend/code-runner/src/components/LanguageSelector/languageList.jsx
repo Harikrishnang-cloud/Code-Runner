@@ -1,8 +1,9 @@
-function LanguageSelector({ language, onChange ,theme}) {
+function LanguageSelector({ language, onChange ,theme,...props}) {
   return (
     <select
       value={language}
       onChange={(e) => onChange(e.target.value)}
+      {...props}
       style={{background: theme === "dark" ? "#1e1e1e" : "#ffffff",
       color: theme === "dark" ? "#ffffff" : "#000000",
       border: theme === "dark" ? "1px solid #555" : "1px solid #ccc",
@@ -21,7 +22,7 @@ function LanguageSelector({ language, onChange ,theme}) {
       <option value="Go" disabled>Go (Coming Soon)</option>
       <option value="Java" disabled>Java (Coming Soon)</option>
       <option value="R" disabled>R (Coming Soon)</option>
-      <option value="mongoDB">MongoDB</option>
+      {/* <option value="mongoDB">MongoDB</option> */}
     </select>
   );
 }

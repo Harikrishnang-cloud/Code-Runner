@@ -24,3 +24,12 @@ body {
     height: 50vh;
   }
 }
+
+.react-tooltip {
+  background: #525151 !important;
+  color: white !important;
+  font-size: 12px !important;
+  border-radius: 6px;
+  padding: 4px 5px !important;
+}
+
