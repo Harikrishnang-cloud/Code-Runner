@@ -1,5 +1,5 @@
 export async function runCodeApi(code, language) {
-  const res = await fetch(`${import.meta.env.VITE_BACKENDURL}/run`, {
+  const res = await fetch(`${import.meta.env.VITE_BACKENDURL}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ code, language })

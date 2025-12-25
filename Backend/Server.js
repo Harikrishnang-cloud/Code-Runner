@@ -15,6 +15,9 @@ app.use(cors());
 app.use(express.json());
 
 app.post("/run", (req, res) => {
+  try {
+    
+  
   const { code, language } = req.body;
 
   let fileName;
@@ -61,6 +64,10 @@ app.post("/run", (req, res) => {
 
     res.json({ output: stdout || "No output" });
   });
+}
+catch(error){
+  console.log(error)
+}
 });
 app.post("/mongoRun",async (req,res)=>{
   const {collection,query} = req.body;
