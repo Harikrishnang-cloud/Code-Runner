@@ -39,7 +39,7 @@ function EditorPage() {
       })
     }
     infoToast()
-    const interval = setInterval(infoToast,1*60*1000)
+    const interval = setInterval(infoToast,15*60*1000)
     return()=>clearInterval(interval)
   },[])
 
@@ -93,35 +93,29 @@ function EditorPage() {
         setTaskCompleted(false)
       }} language={language} autoSuggest={autoSuggest} theme={theme}/>
  
-      <div
-        style={{
-          display: "flex",
-          justifyContent:"space-between",
-          flexWrap:"wrap",
-          alignItems: "center",
-          gap: "12px",
-          marginTop: "10px",
-          // width:"100%"
-        }}>
+      <div style={{display: "flex",justifyContent: "space-between",alignItems: "center",
+                   marginTop: "10px",width: "100%",}}>
+  
+        <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
+          {!timeUp && taskCompleted && (
+            <span style={{ color: "#4caf50", fontWeight: "bold" }}>
+             ✓ Task completed
+            </span>
+          )}
+
+          {timeUp && (
+            <span style={{ color: "#ffcc00", fontWeight: "bold" }}>
+             ⚠️ Time’s up! Please stop and review your solution.
+            </span>
+          )}
+        </div>
+
         <RunButton onRun={async () => {
           const success = await runCode(language);
-          setTaskCompleted(success);
-          // if(success){
-          //   toast.success("Task Completed")
-          // }
-        }} disabled={timeUp}/>
-
-        {!timeUp && taskCompleted && (
-          <span style={{ color: "#4caf50", fontWeight: "bold" }}>
-             Task completed
-          </span>
-        )}
-        {timeUp && (
-          <span style={{ color: "#ffcc00", fontWeight: "bold" }}>
-             Time’s up! Please stop and review your solution.
-          </span>
-        )}
+          if (!timeUp) setTaskCompleted(success);
+        }}disabled={timeUp}/>
       </div>
+
       <OutputPanel output={output} theme={theme} />
 
     <div style={{
