@@ -1,9 +1,11 @@
 import {useEffect, useState } from "react";
+import Modal from "react-modal";
 import CodeEditor from "../components/CodeEditor/CodeEditor";
 import RunButton from "../components/RunButton/RunButton";
 import OutputPanel from "../components/OutputPanel/outputPanel";
 import LanguageSelector from "../components/LanguageSelector/languageList";
 import TaskTimer from "../components/TaskTimer/TaskTimer";
+import QuestionsLibrary from "../components/QuestionsLibrary/QuestionsLibrary";
 import { useCodeRunner } from "../hooks/useCodeRunner";
 import { toast } from "react-toastify";
 import { Tooltip } from 'react-tooltip';
@@ -17,6 +19,7 @@ function EditorPage() {
   const [taskCompleted, setTaskCompleted] = useState(false);
   const [autoSuggest,setautoSuggest] = useState(true)
   const [theme,setTheme] = useState("dark")
+  const [qtn,setQtn] = useState(false)
   const Default_Languages = { 
     javascript : `console.log("Hello World")`,
     typescript : `console.log("Hello World-ts")`,
@@ -80,6 +83,37 @@ function EditorPage() {
 
         
         <div style={{display:"flex",flexWrap:"wrap",gap:"8px",alignItems:"center"}}>
+        {/* <div style={{marginTop:"10px", border:"1px solid #333", padding:"10px",borderRadius:"8px", maxWidth:"500px"}}>
+          <QuestionsLibrary/>
+        </div> */}
+        <button onClick={()=>setQtn(true)} style={{padding:"3px 7px",borderRadius:"6px",background:"#1976D2",color:"#fff",cursor:"pointer",transition: "0.92s"}}>
+          📚Library
+        </button>
+
+      <Modal isOpen={qtn} onRequestClose={() => setQtn(false)}style={{overlay: {backgroundColor: "rgba(0,0,0,0.5)"},
+        content: {maxWidth: "500px", maxHeight:"420px",margin: "auto",borderRadius: "8px",
+        padding: "20px",background: theme === "dark" ? "#1e1e1e" : "#fff",color: theme === "dark" ? "#fff" : "#000"}
+        }}ariaHideApp={false}><h2>📚 Practice Problems</h2>
+        <QuestionsLibrary />
+
+        <div style={{ textAlign: "center", marginTop: "15px" }}>
+  <button
+    onClick={() => setQtn(false)}
+    style={{
+      padding: "6px 14px",
+      borderRadius: "6px",
+      background: "#d33",
+      color: "#fff",
+      border: "none",
+      cursor: "pointer"
+    }}
+  >
+    Close
+  </button>
+</div>
+
+      </Modal>
+
 
         <button onClick={() => setautoSuggest(prev => !prev)}
           style={{padding: "4px 8px",borderRadius: "6px",cursor: "pointer",border: "1px solid #555",background: autoSuggest ? "#2e7d32" : "#444",color: "#fff",transition: "all 0.95s ease"}}>
@@ -88,7 +122,7 @@ function EditorPage() {
 
         <button data-tooltip-id="runTip" data-tooltip-content="Dark/Light"data-tooltip-place="bottom" onClick={() => setTheme(prev => (prev === "dark" ? "light" : "dark"))} 
           style={{padding: "6px 12px",borderRadius: "6px",cursor: "pointer",border: theme === "dark" ? "1px solid #555" : "1px solid #ccc",
-          background: theme === "dark" ? "#1e1e1e" : "#ffffff",color: theme === "dark" ? "#ffffff" : "#000000",transition: "all 0.25s ease",
+          background: theme === "dark" ? "#1e1e1e" : "#ffffff",color: theme === "dark" ? "#ffffff" : "#000000",transition: "all 0.95s ease",
           }}>
           {theme === "dark" ? "Light" : "Dark"}
         </button>
