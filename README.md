@@ -19,7 +19,7 @@ The system sends the code to the backend, executes it in a safe environment, and
 ✨ Features
 Feature	Description
 📝 Code Editor	Highly responsive editor with syntax highlighting
-🧠 Language Support	Supports multiple languages (JS, Python, C/C++)
+🧠 Language Support	Supports multiple languages (JS, TS, Python, C/C++, R, Ruby, php)
 ⚙️ Backend Execution	Code compiled/executed securely
 📤 Input Support	Users can provide custom input
 📄 Output Handling	Shows output, errors, and execution messages
