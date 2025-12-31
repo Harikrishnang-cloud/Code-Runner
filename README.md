@@ -106,7 +106,7 @@ Please open an issue or submit a pull request 🙌
 
 📜 License
 
-MIT License — free to use and modify.
+MIT License - free to use and modify.
 
 💡 Author
 
