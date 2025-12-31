@@ -35,23 +35,7 @@ Frontend	React / Tailwind / CodeMirror (or Monaco Editor)
 Backend	Node.js, Express.js
 Code Execution	Child Process, Docker (optional), Compiler/Interpreters
 Additional Tools	Socket.io (for live), JWT (if auth added)
-📂 Folder Structure
-code-runner/
-├── backend/
-│   ├── controllers/
-│   ├── routes/
-│   ├── services/
-│   ├── utils/
-│   ├── app.js
-│   └── package.json
-│
-└── frontend/
-    ├── src/
-    │   ├── components/
-    │   ├── pages/
-    │   ├── App.js
-    │   └── index.js
-    └── package.json
+
 
 ⚙️ How It Works (Flow)
 
@@ -65,7 +49,7 @@ code-runner/
 
 🚀 Installation & Run Locally
 1️⃣ Clone the project
-git clone https://github.com/YOUR_USERNAME/code-runner.git
+git clone https://github.com/Harikrishnang-cloud/code-runner.git
 cd code-runner
 
 2️⃣ Setup Backend
@@ -81,8 +65,8 @@ npm run dev
 
 🎉 App runs on:
 
-Frontend → http://localhost:3000
-Backend  → http://localhost:5000
+Frontend → http://localhost:5173
+Backend  → http://localhost:1729
 
 🔌 API Routes
 Method	Endpoint	Description
