@@ -10,15 +10,11 @@ The system sends the code to the backend, executes it in a safe environment, and
 
 🎯 Perfect for:
 
-Online coding practice
-
-Learning programming
-
-Building an online judge
-
-Interview preparation tools
-
-Education & training portals
+1.Online coding practice
+2.Learning programming
+3.Building an online judge
+4.Interview preparation tools
+5.Education & training portals
 
 ✨ Features
 Feature	Description
@@ -40,11 +36,8 @@ Additional Tools	Socket.io (for live), JWT (if auth added)
 ⚙️ How It Works (Flow)
 
 ✍️ User writes code in the browser editor.
-
 📩 Code + Language + Input sends to backend using API.
-
 ⚙️ Backend executes code using child process or Docker container.
-
 📤 Output / Errors returned to UI and displayed.
 
 🚀 Installation & Run Locally
@@ -91,29 +84,19 @@ C++	g++ code.cpp -o code && ./code
 Recommended:
 
 Docker container per request
-
 CPU timeouts
-
 Memory limits
-
 Block filesystem access
-
 Disable infinite loops (timeout handler)
 
 📈 Future Enhancements
 
 User authentication system
-
 Save & share code snippets
-
 Execution history logs
-
 Leaderboard + challenges
-
 Realtime interview mode
-
 Compile & run inside Docker
-
 AI code assistant integration
 
 🤝 Contributing
