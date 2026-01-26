@@ -11,7 +11,6 @@ function CodeEditor({ code, setCode,language="javascript",autoSuggest={autoSugge
       value={code}
       onChange={(value) => setCode(value || "")}
       options={{
-        automaticLayout:true,
         suggestOnTriggerCharacters:autoSuggest,
         quickSuggestions:autoSuggest ? {other:true,comments:false,strings:true} : false,
         parameterHints:{

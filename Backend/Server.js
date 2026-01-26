@@ -3,84 +3,96 @@ const cors = require("cors");
 const path = require("path");
 const fs = require("fs");
 const { exec } = require("child_process");
-const { connect } = require("http2");
-require("dotenv").config()
-const connectDB = require("./config/db")
+require("dotenv").config();
+const connectDB = require("./config/db");
 
-
-connectDB()
+connectDB();
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
+const sandboxDir = path.join(__dirname, "sandbox");
+if (!fs.existsSync(sandboxDir)) {
+  fs.mkdirSync(sandboxDir);
+}
+
 app.post("/run", (req, res) => {
   try {
-    
-  
-  const { code, language } = req.body;
+    let { code, language } = req.body;
 
-  let fileName;
-  let command;
+    let fileName;
+    let command;
 
-  if (language === "typescript") {
-    fileName = `temp-${Date.now()}.ts`;
-    command = `npx ts-node --project tsconfig.json --transpile-only ${fileName}`;
-  }
-  else if(language === "python"){
-    fileName = `temp-${Date.now()}.py`;
-    command = `python ${fileName}`;
-  }
-  else if(language === "php"){
-    fileName = `temp-${Date.now()}.php`;
-    command = `"C:\\xampp\\php\\php.exe" ${fileName}`;
-  }
-  else if(language === "ruby"){
-    fileName = `temp-${Date.now()}.rb`;
-    command = `ruby ${fileName}`
-  }
-  else {
-    fileName = `temp-${Date.now()}.js`;
-    command = `node ${fileName}`;
-  }
-
-  const filePath = path.join(__dirname, fileName);
-  fs.writeFileSync(filePath, code);
-
-  exec(command, { timeout: 4000, shell: true }, (error, stdout, stderr) => {
-    if (fs.existsSync(filePath)) {
-      fs.unlinkSync(filePath);
+    if (language === "typescript") {
+      fileName = `temp-${Date.now()}.ts`;
+      command = `npx ts-node --transpile-only ${fileName}`;
+    } 
+    else if (language === "python") {
+      fileName = `temp-${Date.now()}.py`;
+      command = `python ${fileName}`;
+    } 
+    else if (language === "php") {
+      fileName = `temp-${Date.now()}.php`;
+      if (!code.trim().startsWith("<?php")) {
+        code = `<?php\n
+        ${code}`;
+      }
+      command = `docker run --rm -v "${sandboxDir}:/app" php:8.3-cli php /app/${fileName}`;
+    } 
+    else if (language === "c") {
+      fileName = `temp-${Date.now()}.c`;
+      command = `docker run --rm --mount type=bind,source="${sandboxDir}",target=/app gcc:latest sh -c "gcc /app/${fileName} -o /app/a.out && /app/a.out"`;
     }
 
-    if (error) {
-      const match = stderr.match(/:(\d+)/);
-      const line = match ? Number(match[1]) : null;
-
-      return res.json({
-        error: stderr || error.message,
-        line
-      });
+    // else if (language === "ruby") {
+    //   fileName = `temp-${Date.now()}.rb`;
+    //   command = `ruby ${fileName}`;
+    // } 
+    // else if (language === "r") {
+    //   fileName = `temp-${Date.now()}.R`;
+    //   command = `Rscript ${fileName}`;
+    // } 
+    else if (language === "dart") {
+      fileName = `temp-${Date.now()}.dart`;
+      if (!code.includes("main(")) {
+        code = `void main() {\n${code}\n}`;
+      }
+      command = `docker run --rm -v "${sandboxDir}:/app" dart:stable dart /app/${fileName}`;
+    } 
+    else {
+      fileName = `temp-${Date.now()}.js`;
+      command = `node ${fileName}`;
     }
 
-    res.json({ output: stdout || "No output" });
-  });
-}
-catch(error){
-  console.log(error)
-}
+    const filePath = path.join(sandboxDir, fileName);
+    fs.writeFileSync(filePath, code);
+
+    exec(command, { timeout: 4000, shell: true, cwd:sandboxDir}, (error, stdout, stderr) => {
+      if (fs.existsSync(filePath)) {
+        fs.unlinkSync(filePath);
+      }
+
+      if (error) {
+        const match = stderr?.match(/:(\d+)/);
+        const line = match ? Number(match[1]) : null;
+
+        return res.json({
+          error: stderr || error.message,
+          line
+        });
+      }
+
+      res.json({ output: stdout || "No output" });
+    });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
 });
-app.post("/mongoRun",async (req,res)=>{
-  const {collection,query} = req.body;
-  try{
-    const result = runMongoQuery({collection,query})
-    res.json({output:result})
-  }
-  catch(error){
-    res.json({error:error.message})
-  }
-})
 
 const PORT = process.env.PORT || 1729;
 app.listen(PORT, () => {
-  console.log(`server is running on the port - ${PORT}`);
+  console.log(`server is running on port ${PORT}`);
 });

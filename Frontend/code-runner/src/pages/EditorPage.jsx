@@ -22,9 +22,16 @@ function EditorPage() {
   const [qtn,setQtn] = useState(false)
   const Default_Languages = { 
     javascript : `console.log("Hello World")`,
-    typescript : `console.log("Hello World-ts")`,
+    typescript : `console.log("Hello TypeScript World")`,
     python : `print("Hello World")`,
-    php : `<?php echo "Hello World"`,
+    php : `<?php 
+    echo "Hello World"
+    `,
+    c:`#include <stdio.h>
+    int main(){
+    printf("Hello C World \\n");
+    return 0;
+    }`,
     ruby: `puts "Hello World"`,
   }
   useEffect(()=>{
