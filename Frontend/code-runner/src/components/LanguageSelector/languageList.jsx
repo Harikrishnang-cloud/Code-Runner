@@ -26,16 +26,15 @@ function LanguageSelector({ language, onChange ,theme,...props}) {
       <option value="python">Python</option>
       <option value="dart">Dart</option>
       <option value="php">PHP</option>
+      <option value="go">Go-lang(Work in progress...)</option>
       <option value="c">C</option>
-      <option value="ruby"disabled>Ruby (Work in progress...)</option>
-      <option value="cpp" disabled>C++ (Coming Soon)</option>
-      <option value="r"disabled>R(Coming Soon...)</option>
+      <option value="ruby">Ruby (Work in progress...)</option>
+      <option value="cpp">C++ (Work in progress...)</option>
+      <option value="r"disabled>R(Coming Soon)</option>
       <option value="C#" disabled>C Sharp (Coming Soon)</option>
-      <option value="Go" disabled>Go (Coming Soon)</option>
       <option value="Java" disabled>Java (Coming Soon)</option>
       
 
-      {/* <option value="mongoDB">MongoDB</option> */}
     </select>
   );
 }

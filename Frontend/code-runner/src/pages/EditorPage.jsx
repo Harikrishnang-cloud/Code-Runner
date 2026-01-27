@@ -33,6 +33,7 @@ function EditorPage() {
     return 0;
     }`,
     ruby: `puts "Hello World"`,
+    go:`fmt.Println("Hello Go World")`,
   }
   useEffect(()=>{
     const savedTheme = localStorage.getItem("theme")

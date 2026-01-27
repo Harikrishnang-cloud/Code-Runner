@@ -4,11 +4,12 @@ const path = require("path");
 const fs = require("fs");
 const { exec } = require("child_process");
 require("dotenv").config();
-const connectDB = require("./config/db");
-
-connectDB();
-
 const app = express();
+
+
+
+
+
 app.use(cors());
 app.use(express.json());
 
@@ -44,6 +45,22 @@ app.post("/run", (req, res) => {
       fileName = `temp-${Date.now()}.c`;
       command = `docker run --rm --mount type=bind,source="${sandboxDir}",target=/app gcc:latest sh -c "gcc /app/${fileName} -o /app/a.out && /app/a.out"`;
     }
+    else if (language === "go") {
+      fileName = `temp-${Date.now()}.go`;
+      if (!code.includes("package main")) {
+        code = `package main
+        import "fmt"
+        func main() {
+          ${code}
+        }`;
+      }
+      command = `docker run --rm \
+        -v "${sandboxDir}:/app" \
+        -w /app \
+        golang:1.22 \
+        sh -c "go run ${fileName}"`;
+    }
+
 
     // else if (language === "ruby") {
     //   fileName = `temp-${Date.now()}.rb`;
